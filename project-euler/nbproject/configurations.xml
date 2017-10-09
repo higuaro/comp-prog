@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="84">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df name="project_euler" root=".">
+      <df name="bin">
+      </df>
+      <df name="docs">
+        <df name="mathschallenge.net_files">
+        </df>
+      </df>
+      <in>d.cpp</in>
+      <in>isqr.cpp</in>
+      <in>p17.cpp</in>
+      <in>p19.cpp</in>
+      <in>p21.cpp</in>
+      <in>p23.cpp</in>
+      <in>p24.cpp</in>
+      <in>p26.cpp</in>
+      <in>p27.cpp</in>
+      <in>p28.cpp</in>
+      <in>p29.cpp</in>
+      <in>p30.cpp</in>
+      <in>p31.cpp</in>
+      <in>p32.cpp</in>
+      <in>p33.cpp</in>
+      <in>p34.cpp</in>
+      <in>p35.cpp</in>
+      <in>p36.cpp</in>
+      <in>p37.cpp</in>
+      <in>p40.cpp</in>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+      </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath>bin/p37</executablePath>
+        </makeTool>
+      </makefileType>
+      <item path="d.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="isqr.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p17.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p19.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p21.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p23.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p24.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p26.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p27.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p28.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p29.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p30.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p31.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p32.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p33.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p34.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p35.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p36.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p37.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="p40.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

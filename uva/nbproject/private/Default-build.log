@@ -1,0 +1,36 @@
+[  4%] Building CXX object CMakeFiles/3n+1.dir/3n+1.cpp.o
+[  8%] Linking CXX executable bin/3n+1
+[  8%] Built target 3n+1
+[ 12%] Building CXX object CMakeFiles/BlowingFuses.dir/BlowingFuses.cpp.o
+[ 16%] Linking CXX executable bin/BlowingFuses
+[ 16%] Built target BlowingFuses
+[ 20%] Building CXX object CMakeFiles/ContestScoreboard.dir/ContestScoreboard.cpp.o
+[ 25%] Linking CXX executable bin/ContestScoreboard
+[ 25%] Built target ContestScoreboard
+[ 29%] Building CXX object CMakeFiles/CryptKicker.dir/CryptKicker.cpp.o
+[ 33%] Linking CXX executable bin/CryptKicker
+[ 33%] Built target CryptKicker
+[ 37%] Building CXX object CMakeFiles/ErdosNumber.dir/ErdosNumber.cpp.o
+[ 41%] Linking CXX executable bin/ErdosNumber
+[ 41%] Built target ErdosNumber
+[ 45%] Building CXX object CMakeFiles/Permutations.dir/Permutations.cpp.o
+[ 50%] Linking CXX executable bin/Permutations
+[ 50%] Built target Permutations
+[ 54%] Building CXX object CMakeFiles/StackEmUp.dir/StackEmUp.cpp.o
+[ 58%] Linking CXX executable bin/StackEmUp
+[ 58%] Built target StackEmUp
+[ 62%] Building CXX object CMakeFiles/TheBasesAreLoaded.dir/TheBasesAreLoaded.cpp.o
+[ 66%] Linking CXX executable bin/TheBasesAreLoaded
+[ 66%] Built target TheBasesAreLoaded
+[ 70%] Building CXX object CMakeFiles/TheSnail.dir/TheSnail.cpp.o
+[ 75%] Linking CXX executable bin/TheSnail
+[ 75%] Built target TheSnail
+[ 79%] Building CXX object CMakeFiles/WERTYU.dir/WERTYU.cpp.o
+[ 83%] Linking CXX executable bin/WERTYU
+[ 83%] Built target WERTYU
+[ 87%] Building CXX object CMakeFiles/soundex_indexing.dir/soundex_indexing.cpp.o
+[ 91%] Linking CXX executable bin/soundex_indexing
+[ 91%] Built target soundex_indexing
+[ 95%] Building CXX object CMakeFiles/world_scramble.dir/world_scramble.cpp.o
+[100%] Linking CXX executable bin/world_scramble
+[100%] Built target world_scramble

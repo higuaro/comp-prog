@@ -1,0 +1,10 @@
+Makefile
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+.kdev4/
+*.kdev4
+build/
+bin/
+*.in
+*.out

@@ -1,0 +1,1 @@
+Solutions to some hackerank, projecteuler.net and [UVA Online Judge](http://uva.onlinejudge.org/) problems.
