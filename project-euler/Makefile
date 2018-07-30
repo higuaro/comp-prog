@@ -3,11 +3,11 @@ EXECS := $(SOURCES:.cpp=)
 BIN := bin
 RELEASE := -O2
 WARNINGS := -pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy \
-	-Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op -Wmissing-declarations \
+	-Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op \
 	-Wmissing-include-dirs -Wnoexcept -Wold-style-cast -Woverloaded-virtual -Wredundant-decls \
-	-Wshadow -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel \
+	-Wsign-promo -Wstrict-null-sentinel \
 	-Wstrict-overflow=5 -Wswitch-default -Wundef -Werror -Wno-unused -Weffc++
-DEBUG := -g $(WARNINGS) -pedantic -Werror
+DEBUG := -g $(WARNINGS) -pedantic
 CFLAGS := $(DEBUG) --std=c++11
 
 % : %.cpp

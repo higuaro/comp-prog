@@ -14,7 +14,7 @@ struct cell {
     vint values;
     int v;
     
-    cell(int v) : v(v) {}
+    cell(int v) : values{}, v{v} {}
 };
 
 int main() {
