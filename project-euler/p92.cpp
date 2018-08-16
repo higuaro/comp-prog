@@ -1,6 +1,6 @@
 #include <iostream>
 #include <unordered_set>
-auto sum_sqr_digits(const unsigned n) -> decltype(n) {
+static auto sum_sqr_digits(const unsigned n) {
   auto k = n, s = 0u;
   while (k > 0) {
     auto d = k % 10;

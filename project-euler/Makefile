@@ -3,12 +3,12 @@ EXECS := $(SOURCES:.cpp=)
 BIN := bin
 RELEASE := -O2
 WARNINGS := -pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy \
-	-Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op \
+	-Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op -Wmissing-declarations \
 	-Wmissing-include-dirs -Wnoexcept -Wold-style-cast -Woverloaded-virtual -Wredundant-decls \
-	-Wsign-promo -Wstrict-null-sentinel \
+	-Wshadow -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel \
 	-Wstrict-overflow=5 -Wswitch-default -Wundef -Werror -Wno-unused -Weffc++
 DEBUG := -g $(WARNINGS) -pedantic
-CFLAGS := $(DEBUG) --std=c++11
+CFLAGS := $(DEBUG) --std=c++14
 
 % : %.cpp
 	@if [ ! -e "$(BIN)" ]; then mkdir $(BIN); fi
