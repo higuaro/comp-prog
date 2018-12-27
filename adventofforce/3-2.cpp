@@ -53,11 +53,18 @@ int main() {
       for (int j = r.l; j < r.l + r.w; j++)
         fabric[i][j]++;
 
-  int claims = 0;
-  for (int i = 0; i < N; i++)
-    for (int j = 0; j < N; j++)
-      if (fabric[i][j] > 1) claims++;
+  int ids = 1;
+  for (auto r : rects) {
+    bool found = true;
+    for (int i = r.t; i < r.t + r.h; i++)
+      for (int j = r.l; j < r.l + r.w; j++)
+        if (fabric[i][j] > 1) found = false;
+    if (found) {
+      cout << ids << '\n';
+      return 0;
+    }
+    ids++;
+  }
 
-  cout << claims << std::endl;
   return 0;
 }
