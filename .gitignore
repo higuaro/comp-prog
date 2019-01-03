@@ -1,7 +1,9 @@
 */bin/*
 */build/*
 */tmp/*
-*.in
+*.bak
+adventofcode/*.in
+adventofcode/*.test.in
 *.out
 *.swp
 *.swo
