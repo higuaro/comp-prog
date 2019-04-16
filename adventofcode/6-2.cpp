@@ -47,52 +47,19 @@ int main() {
   }
 
   // Compute the O(n^2) Manhattan distances
-  table<int> min_dist = create_table<int>(W, H, oo);
+  table<int> dist = create_table<int>(W, H);
   for (int iy = 0; iy < H; iy++)
     for (int jx = 0; jx < W; jx++)
       for (auto [x, y] : coords)
-        min_dist[iy][jx] = ::min(min_dist[iy][jx], abs(x - jx) + abs(y - iy));
+        dist[iy][jx] += abs(x - jx) + abs(y - iy);
 
-  // Label the points accoding their Manhattan distances
-  table<int> labels = create_table<int>(W, H, oo);
-  for (int iy = 0; iy < H; iy++)
-    for (int jx = 0; jx < W; jx++) {
-      int label = 1;
-      for (auto [x, y] : coords) {
-        int d = abs(x - jx) + abs(y - iy);
-        if (d == min_dist[iy][jx])
-          labels[iy][jx] = labels[iy][jx] == oo ? label : 0;
-        label++;
-      }
-    }
-
-  // Check the borders, those on the borders can be ignored
-  set<int> ignore{};
-  for (int j = 0; j < W; j++) {
-    int label1 = labels[0][j];
-    int label2 = labels[H - 1][j];
-    if (!ignore.count(label1)) ignore.insert(label1);
-    if (!ignore.count(label2)) ignore.insert(label2);
-  }
-  for (int i = 0; i < H; i++) {
-    int label1 = labels[i][0];
-    int label2 = labels[i][W - 1];
-    if (!ignore.count(label1)) ignore.insert(label1);
-    if (!ignore.count(label2)) ignore.insert(label2);
-  }
-
-  int total_labels = static_cast<int>(coords.size());
-  map<int, int> areas;
+  // const int limit = 32;
+  const int limit = 10000;
+  int region_size = 0;
   for (int i = 0; i < H; i++)
     for (int j = 0; j < W; j++)
-      areas[labels[i][j]]++;
+      if (dist[i][j] < limit) region_size++;
 
-  int max_area = _oo;
-  for (int label = 1; label < total_labels; label++) {
-    if (ignore.count(label)) continue;
-    int area = areas[label];
-    if (area > max_area) max_area = area;
-  }
-  cout << "max area = " << max_area << endl;
+  cout << "region size = " << region_size << endl;
   return 0;
 }

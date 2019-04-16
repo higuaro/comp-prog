@@ -4,7 +4,6 @@ typedef long double ld;
 int main() {
   std::ios_base::sync_with_stdio(false);
   std::cin.tie(nullptr);
-  int tmp;
   vector<int> freqs;
   std::copy(std::istream_iterator<int>(std::cin), 
             std::istream_iterator<int>(), 
