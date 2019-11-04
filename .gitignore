@@ -1,7 +1,14 @@
+cf/rounds/*
 */bin/*
 */build/*
 */tmp/*
 *.bak
+*.txt
+*.svg
+**/*.in
+*.in
+*.png
+*.out
 adventofcode/*.in
 adventofcode/*.test.in
 *.out
