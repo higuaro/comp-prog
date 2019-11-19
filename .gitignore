@@ -15,3 +15,8 @@ adventofcode/*.test.in
 *.swp
 *.swo
 books/
+
+# Staging areas for WIP problems
+adventofcode/staging/
+cf/staging/
+
