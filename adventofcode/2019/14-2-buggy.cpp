@@ -9,7 +9,7 @@ reaction parse_reaction(string& line) {
   istringstream ss(line);
   int quantity; ss >> quantity;
   string element; ss >> element;
-  return make_pair(element, quantity);
+  return {element, quantity};
 }
 
 vector<reaction> parse_components(string& line) {
@@ -20,8 +20,9 @@ vector<reaction> parse_components(string& line) {
   while (ss >> quantity) {
     ss.ignore(1);
     getline(ss, element, ',');
-    components.push_back(make_pair(element, quantity));
+    components.push_back({element, quantity});
   }
+  sort(begin(components), end(components));
   return components;
 }
 
@@ -88,10 +89,6 @@ int main() {
   while (range_end - range_start > 1) {
     int64_t guess = range_start + (range_end - range_start) / 2;
     ores = produce(guess, FUEL);
-    if (ores == ORES) {
-      cout << "WOW found the perfect match! " << guess << endl;
-      return 0;
-    }
     if (ores < ORES)
       range_start = guess;
 
@@ -99,7 +96,6 @@ int main() {
       range_end = guess;
   }
   cout << "Final range: " << range_start << ',' << range_end << endl;
-  cout << produce(range_start - 1, FUEL) << " produces " << range_start - 1 << " fuel\n";
   cout << produce(range_start, FUEL) << " produces " << range_start << " fuel\n";
   cout << produce(range_end, FUEL) << " produces " << range_end << " fuel\n";
 

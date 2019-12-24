@@ -9,7 +9,7 @@ reaction parse_reaction(string& line) {
   istringstream ss(line);
   int quantity; ss >> quantity;
   string element; ss >> element;
-  return make_pair(element, quantity);
+  return {element, quantity};
 }
 
 vector<reaction> parse_components(string& line) {
@@ -20,9 +20,9 @@ vector<reaction> parse_components(string& line) {
   while (ss >> quantity) {
     ss.ignore(1);
     getline(ss, element, ',');
-    components.push_back(make_pair(element, quantity));
+    components.push_back({element, quantity});
   }
-  return components;
+  sort(begin(components), end(components));
 }
 
 int64_t produce(int64_t quantity, const string& element) {
