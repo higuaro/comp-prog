@@ -34,11 +34,12 @@ public:
   }
 
   void reset() {
-    mem.clear();
-    std::copy(begin(rom), end(rom), begin(mem));
+    mem = rom;
     add_empty_memory();
     ip = 0;
     halted = false;
+    paused = false;
+    relative_base = 0;
   }
 
   void pause() {
@@ -58,7 +59,7 @@ public:
       int64_t inst = mem[ip];
       int64_t opcode = mem[ip] % 100;
       int64_t mode;
-      // std::clog << "inst " << inst << " ip " << ip << endl;
+      // std::clog << "inst " << inst << " ip " << ip << std::endl;
       switch (opcode) {
         case 1:
         case 2: {
