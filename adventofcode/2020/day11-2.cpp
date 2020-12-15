@@ -1,16 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-void d(const vector<string>& g) {
-  int n = g.size();
-  int m = g[0].size();
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < m; j++) {
-      cout << g[i][j];
-    }
-    cout << endl;
-  }
-  cout << endl;
-}
 int count_occupied(const vector<string>& g, int i, int j) {
   int n = g.size();
   int m = g[0].size();
