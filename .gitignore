@@ -1,23 +1,45 @@
+# AtCoder
+atcoder/rounds/*
+!atcoder/rounds/**/*.cpp
+atcoder/upsolved/*
+!atcoder/upsolved/*.cpp
+atcoder/upsolved/wip/
+
+# CodeForces
 cf/rounds/*
+!cf/rounds/**/*.cpp
+cf/wip/
+
 */bin/*
 */build/*
 */tmp/*
-*.bak
-*.txt
-*.svg
+
 **/*.in
-*.in
-*.png
-*.out
-adventofcode/*
-adventofcode/*.in
-adventofcode/*.test.in
 *.out
 *.swp
 *.swo
+*.bak
+*.txt
+*.svg
+*.in
+*.png
+*.out
+
+# Ignore anything for AoC, this requires explicitly adding files
+# (I hate this AoC! Problems are sooooo fucking long and 50% of the time uninteresting and/or annoying)
+adventofcode/*
+
 books/
 
-# Staging areas for WIP problems
-adventofcode/staging/
-cf/staging/
+hackercup/
+!hackercup/**/*.cpp
+
+# LeetCode
+# Ignore everything in this folder unless explicitly added, usually this folder
+# is for local copies of the code for debugging
+leetcode/
+
+# HackeRank
+# Again, ignore unless explicitly told, solutions are already stored in their servers
+hackerank/
 
