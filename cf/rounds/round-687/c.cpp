@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-int find_ky(const string& a, const int n, const int p, const int k) {
-  return 0;
-}
 int main() {
   int t; cin >> t;
   while (t--) {
@@ -17,10 +14,10 @@ int main() {
       for (int i = y + p - 1; i < n - y; i += k) {
         if (a[i] != '1') {
           x++;
-          if ((ky * y + kx * x) > ans) {
-            skip = true;
-            break;
-          }
+          //if ((ky * y + kx * x) > ans) {
+          //  skip = true;
+          //  break;
+          //}
         }
       }
       if (!skip) {

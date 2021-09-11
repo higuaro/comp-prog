@@ -1,12 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+const int ALPH_SIZE = 26 + 1;
+
 typedef vector<vector<char>> board_t;
 typedef unordered_map<char, pair<int, int>> coordinates_t;
-typedef unordered_map<char, unordered_map<char, tuple<int, int, int>>> distances_t;
+typedef array<array<tuple<int, int, int>, ALPH_SIZE>, ALPH_SIZE> distances_t;
 
-int offset_y[]{ -1,  0,  1,  0};
-int offset_x[]{  0,  1,  0, -1};
+const int offset_y[]{ -1,  0,  1,  0};
+const int offset_x[]{  0,  1,  0, -1};
 
 void draw(const vector<vector<char>>& maze) {
   for (size_t row = 0; row < maze.size(); row++) {
@@ -84,7 +86,8 @@ tuple<int, int, int> bfs(const board_t& maze, const int W, const int H,
         ch = maze[ny][nx];
         keys_collected |= islower(ch) ? 1 << static_cast<int>(ch - 'a') : 0;
         node = parents[node.state];
-        nx = node.x(); ny = node.y();
+        nx = node.x();
+        ny = node.y();
         steps++;
       }
       ch = maze[sy][sx];
@@ -123,19 +126,23 @@ distances_t precompute_distances(const board_t& maze, const int W, const int H,
     int sx, sy;
     char source = symbols[i];
     if (source == '@') {
-      sx = ply_x; sy = ply_y;
+      sx = ply_x;
+      sy = ply_y;
     } else {
       auto coords = key_map[source];
-      sx = coords.first; sy = coords.second;
+      sx = coords.first;
+      sy = coords.second;
     }
     for (int j = i + 1; j < symbols.size(); j++) {
       char destination = symbols[j];
       int dx, dy;
       if (destination == '@') {
-        dx = ply_x; dy = ply_y;
+        dx = ply_x;
+        dy = ply_y;
       } else {
         auto coords = key_map[destination];
-        dx = coords.first; dy = coords.second;
+        dx = coords.first;
+        dy = coords.second;
       }
       auto dist = bfs(maze, W, H, sx, sy, dx, dy);
       distances[source][destination] = dist;
@@ -242,6 +249,27 @@ string to_str(int doors, char base = 'a') {
   return oss.str();
 }
 
+void print_sol(board_t& maze, vector<char>& solution,
+    coordinates_t& key_map, int ply_x, int ply_y) {
+  cout << "solution steps: " << solution.size() << endl;
+
+  cout << "play animation? [y/n and ENTER] ";
+  char input; cin >> input;
+  if (input != 'y') return;
+
+  maze[ply_y][ply_x] = '.';
+  for (auto c : solution) {
+    if (c == '@') continue;
+    auto [x, y] = key_map[c];
+    maze[y][x] = '@';
+    if (system("CLS")) system("clear");
+    draw(maze);
+    maze[y][x] = '.';
+    this_thread::sleep_for(chrono::milliseconds(1000));
+  }
+  cout << "solution steps: " << solution.size() << endl;
+}
+
 int main() {
   ifstream fis("18.in");
   auto prev_buf = cin.rdbuf();
@@ -258,12 +286,15 @@ int main() {
       char c = line[col];
       maze_line.push_back(c);
       if (c == '@') {
-        ply_x = col; ply_y = row;
+        ply_x = col;
+        ply_y = row;
       }
       if (islower(c)) key_map[c] = {col, row};
     }
     maze.push_back(maze_line);
   }
+  cin.rdbuf(prev_buf);
+
   const int W = maze[0].size();
   const int H = maze.size();
 
@@ -274,24 +305,7 @@ int main() {
   auto distances = precompute_distances(maze, W, H, ply_x, ply_y, key_map);
   auto solution = find_path(maze, W, H, ply_x, ply_y, key_map, distances);
 
-  cout << "solution steps: " << solution.size() << endl;
-
-  cout << "play animation? [y/n and ENTER] ";
-  cin.rdbuf(prev_buf);
-  char input; cin >> input;
-  if (input != 'y') return 0;
-
-  maze[ply_y][ply_x] = '.';
-  for (auto c : solution) {
-    if (c == '@') continue;
-    auto [x, y] = key_map[c];
-    maze[y][x] = '@';
-    if (system("CLS")) system("clear");
-    draw(maze);
-    maze[y][x] = '.';
-    this_thread::sleep_for(chrono::milliseconds(1000));
-  }
-  cout << "solution steps: " << solution.size() << endl;
+  print_sol(maze, solution, key_map, ply_x, ply_y);
 
   return 0;
 }

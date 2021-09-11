@@ -4,28 +4,25 @@ vector<pair<int, int>> factors(int n) {
   vector<pair<int, int>> f;
   int p = 2;
   int count = 0;
-  while (n && (n % p) == 0) {
-    count++;
-    n %= p;
+  while (n && !(n % p)) {
+    count++; n /= p;
   }
   if (count) f.emplace_back(2, count);
   for (p = 3; p <= sqrt(n); p += 2) {
     count = 0;
-    while (n && (n % p) == 0) {
-      count++;
-      n %= p;
+    while (n && !(n % p)) {
+      count++; n /= p;
     }
     if (count) f.emplace_back(p, count);
   }
+  if (n) f.emplace_back(n, 1);
   return f;
 }
 int main() {
   int n; cin >> n;
-  vector<int> a;
-  for (int i = 0; i < n; i++) {
-    int ai; cin >> ai;
-    a.push_back(ai);
-  }
+  vector<int> a(n, 0);
+  for (int i = 0; i < n; i++)
+    cin >> a[i];
   sort(begin(a), end(a));
 
   unordered_map<int, int> seen;
@@ -34,25 +31,17 @@ int main() {
     int k = a[i];
     if (seen.count(k)) continue;
     auto f = factors(k);
-    if (f.empty()) {
-      seen[k] = 1;
-      total++;
-    } else {
-      bool factor_seen = false;
-  cout << k << ':' << endl;
-      for (auto [p, c] : f) {
-cout << p << ' ' << c << endl;
-
-        if (seen.count(p)) {
-          if (seen[p] < c) {
-            seen[p] = c;
-          } else {
-            factor_seen = true;
-          }
-        }
+cout << "factors " << k << ": ";
+for (auto [p, c] : f) cout << '(' << p << ',' << c << "),"; cout << endl;
+    bool factor_seen = false;
+    for (auto [p, c] : f) {
+      if (seen.count(p) && seen[p] >= c) {
+        factor_seen = true;
+      } else {
+        seen[p] = c;
       }
-      if (!factor_seen) total++;
     }
+    if (!factor_seen) total++;
   }
   cout << total << endl;
   return 0;
