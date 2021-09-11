@@ -9,6 +9,7 @@ cf/rounds/*
 *.in
 *.png
 *.out
+adventofcode/*
 adventofcode/*.in
 adventofcode/*.test.in
 *.out
