@@ -4,6 +4,8 @@ atcoder/rounds/*
 atcoder/upsolved/*
 !atcoder/upsolved/*.cpp
 atcoder/upsolved/wip/
+atcoder/virtual-participation/*
+!atcoder/virtual-participation/*.cpp
 
 # CodeForces
 cf/rounds/*
