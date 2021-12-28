@@ -1,18 +1,6 @@
-#include <chrono>
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <unordered_set>
-#include <unordered_map>
-#include <set>
-#include <map>
-#include <numeric>
-#include <algorithm>
-#include <cmath>
-#include <sstream>
-#include <utility>
-
+#include <bits/stdc++.h>
 using namespace std;
+
 // burrow entrances from hallway
 const vector<int> burrow_entrance{0, 0, 1, 0, 2, 0, 3, 0, 4, 0, 0};
 const int oo = 9999999;
@@ -43,16 +31,6 @@ int energy(int amphipod, int steps) {
   }
 }
 
-bool operator==(const state_t& s1, const state_t& s2) {
-  //if (s1.energy != s2.energy) return false;
-  for (int i = 0; i < 11; i++)
-    if (s1.hallway[i] != s2.hallway[i]) return false;
-  for (int i = 0; i < 4; i++)
-    for (int j = 0; j < 2; j++)
-      if (s1.burrows[i][j] != s2.burrows[i][j]) return false;
-  return true;
-}
-
 encoded_t encode_state(const state_t& s) {
   // first 24 bits for the burrows
   int64_t burrows = 0;
@@ -80,25 +58,6 @@ state_t decode_state(const encoded_t& encoded) {
   }
   s.energy = energy;
   return s;
-}
-
-string to_str(const state_t& s) {
-  ostringstream o;
-  o << "#############\n#";
-  for (int i = 0; i < 11; i++)
-    o << static_cast<char>(s.hallway[i] ? s.hallway[i] - 1 + 'A' : '.');
-  o << "#\n###";
-  for (int i = 0; i < 4; i++) {
-    o << static_cast<char>(s.burrows[i][1] ? s.burrows[i][1] - 1 + 'A' : '.');
-    o << '#';
-  }
-  o << "##     energy: " << s.energy << " id: " << encode_state(s).first << "\n  #";
-  for (int i = 0; i < 4; i++) {
-    o << static_cast<char>(s.burrows[i][0] ? s.burrows[i][0] - 1 + 'A' : '.');
-    o << '#';
-  }
-  o << "\n  #########\n";
-  return o.str();
 }
 
 void check_burrow_and_move(const state_t& s, int burrow_index, int amphipod,
@@ -201,10 +160,6 @@ vector<encoded_t> possible_moves_from(const state_t& s) {
   return moves;
 }
 
-string _d(int64_t s) {
-  return to_str(decode_state({s, 0}));
-}
-
 adj_t gen_adjacency_list(const state_t& start) {
   adj_t adj;
   queue<encoded_t> q; q.push(encode_state(start));
@@ -225,89 +180,14 @@ adj_t gen_adjacency_list(const state_t& start) {
 int main() {
   state_t start;
 #define S start.burrows
-  S[0][1] = B; S[1][1] = C; S[2][1] = B; S[3][1] = D;
-  S[0][0] = A; S[1][0] = D; S[2][0] = C; S[3][0] = A;
-  cout << to_str(start) << endl;
+  S[0][1] = D; S[1][1] = B; S[2][1] = A; S[3][1] = C;
+  S[0][0] = C; S[1][0] = A; S[2][0] = D; S[3][0] = B;
 #undef S
 
   state_t finish;
 #define S finish.burrows
   S[0][1] = A; S[1][1] = B; S[2][1] = C; S[3][1] = D;
   S[0][0] = A; S[1][0] = B; S[2][0] = C; S[3][0] = D;
-#undef S
-
-  state_t tmp;
-#define S tmp.burrows
-  fill(begin(tmp.hallway), end(tmp.hallway), 0);
-  tmp.hallway[3] = B;
-  S[0][1] = B; S[1][1] = C; S[2][1] = 0; S[3][1] = D;
-  S[0][0] = A; S[1][0] = D; S[2][0] = C; S[3][0] = A;
-  cout << to_str(tmp) << endl;
-
-  fill(begin(tmp.hallway), end(tmp.hallway), 0);
-  tmp.hallway[3] = B; tmp.hallway[5] = C;
-  S[0][1] = B; S[1][1] = 0; S[2][1] = 0; S[3][1] = D;
-  S[0][0] = A; S[1][0] = D; S[2][0] = C; S[3][0] = A;
-  cout << to_str(tmp) << endl;
-
-  fill(begin(tmp.hallway), end(tmp.hallway), 0);
-  tmp.hallway[3] = B;
-  S[0][1] = B; S[1][1] = 0; S[2][1] = C; S[3][1] = D;
-  S[0][0] = A; S[1][0] = D; S[2][0] = C; S[3][0] = A;
-  cout << to_str(tmp) << endl;
-
-  fill(begin(tmp.hallway), end(tmp.hallway), 0);
-  tmp.hallway[3] = B; tmp.hallway[5] = D;
-  S[0][1] = B; S[1][1] = 0; S[2][1] = C; S[3][1] = D;
-  S[0][0] = A; S[1][0] = 0; S[2][0] = C; S[3][0] = A;
-  cout << to_str(tmp) << endl;
-
-  fill(begin(tmp.hallway), end(tmp.hallway), 0);
-  tmp.hallway[5] = D;
-  S[0][1] = B; S[1][1] = 0; S[2][1] = C; S[3][1] = D;
-  S[0][0] = A; S[1][0] = B; S[2][0] = C; S[3][0] = A;
-  cout << to_str(tmp) << endl;
-
-  fill(begin(tmp.hallway), end(tmp.hallway), 0);
-  tmp.hallway[3] = B; tmp.hallway[5] = D;
-  S[0][1] = 0; S[1][1] = 0; S[2][1] = C; S[3][1] = D;
-  S[0][0] = A; S[1][0] = B; S[2][0] = C; S[3][0] = A;
-  cout << to_str(tmp) << endl;
-
-  fill(begin(tmp.hallway), end(tmp.hallway), 0);
-  tmp.hallway[5] = D;
-  S[0][1] = 0; S[1][1] = B; S[2][1] = C; S[3][1] = D;
-  S[0][0] = A; S[1][0] = B; S[2][0] = C; S[3][0] = A;
-  cout << to_str(tmp) << endl;
-
-  fill(begin(tmp.hallway), end(tmp.hallway), 0);
-  tmp.hallway[5] = D; tmp.hallway[7] = D;
-  S[0][1] = 0; S[1][1] = B; S[2][1] = C; S[3][1] = 0;
-  S[0][0] = A; S[1][0] = B; S[2][0] = C; S[3][0] = A;
-  cout << to_str(tmp) << endl;
-
-  fill(begin(tmp.hallway), end(tmp.hallway), 0);
-  tmp.hallway[5] = D; tmp.hallway[7] = D; tmp.hallway[9] = A;
-  S[0][1] = 0; S[1][1] = B; S[2][1] = C; S[3][1] = 0;
-  S[0][0] = A; S[1][0] = B; S[2][0] = C; S[3][0] = 0;
-  cout << to_str(tmp) << endl;
-
-  fill(begin(tmp.hallway), end(tmp.hallway), 0);
-  tmp.hallway[5] = D; tmp.hallway[9] = A;
-  S[0][1] = 0; S[1][1] = B; S[2][1] = C; S[3][1] = 0;
-  S[0][0] = A; S[1][0] = B; S[2][0] = C; S[3][0] = D;
-  cout << to_str(tmp) << endl;
-
-  fill(begin(tmp.hallway), end(tmp.hallway), 0);
-  tmp.hallway[9] = A;
-  S[0][1] = 0; S[1][1] = B; S[2][1] = C; S[3][1] = D;
-  S[0][0] = A; S[1][0] = B; S[2][0] = C; S[3][0] = D;
-  cout << to_str(tmp) << endl;
-
-  fill(begin(tmp.hallway), end(tmp.hallway), 0);
-  S[0][1] = A; S[1][1] = B; S[2][1] = C; S[3][1] = D;
-  S[0][0] = A; S[1][0] = B; S[2][0] = C; S[3][0] = D;
-  cout << to_str(tmp) << endl;
 #undef S
 
   cout << "generating adjacency list...\n";
@@ -318,26 +198,26 @@ int main() {
   cout << "# nodes: " << adj.size() << endl;
 
   unordered_map<int64_t, int> energies;
-  for (auto [node, edged] : adj)
+  unordered_map<int64_t, bool> processed;
+  for (auto [node, edged] : adj) {
     energies[node] = oo;
+    processed[node] = false;
+  }
 
   auto start_node = encode_state(start).first;
   energies[start_node] = 0;
-  unordered_set<bool> processed;
   priority_queue<pair<int, int64_t>> q;
   q.push({0, start_node});
   while (!q.empty()) {
-    auto [energy, node] = q.top(); q.pop();
-    if (processed.count(node)) continue;
-    processed.insert(node);
+    auto node = q.top().second; q.pop();
+    if (processed[node]) continue;
+    processed[node] = true;
     for (auto [child_node, child_energy] : adj[node])
       if (energies[node] + child_energy < energies[child_node]) {
-        //cout << "here " << (energies[node] + child_energy) << endl;
         energies[child_node] = energies[node] + child_energy;
         q.push({-energies[child_node], child_node});
       }
   }
-  cout << "tmp: " << energies[encode_state(tmp).first] << endl;
   cout << "min energy found: " << energies[encode_state(finish).first] << '\n';
   return 0;
 }
