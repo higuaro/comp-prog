@@ -44,7 +44,10 @@ encoded_t encode_state(const state_t& s) {
   // 48 bits for the burrows
   uint64_t burrows = 0;
   for (int i = 0; i < 4; i++) {
-    uint64_t b = (s.burrows[i][3] << 9) | (s.burrows[i][2] << 6) | (s.burrows[i][1] << 3) | s.burrows[i][0];
+    uint64_t b = (s.burrows[i][3] << 9) //
+        | (s.burrows[i][2] << 6) //
+        | (s.burrows[i][1] << 3) //
+        | s.burrows[i][0];
     burrows |= b << (12 * i);
   }
   // first 33 bits for the hallway
@@ -78,30 +81,6 @@ state_t decode_state(const node_t& node) {
 node_t to_node(const state_t& s) {
   auto encoded = encode_state(s);
   return {get<0>(encoded), get<1>(encoded)};
-}
-
-string to_str(const state_t& s, const string& indent = "") {
-  ostringstream o;
-  o << indent << "#############\n" << indent << '#';
-  for (int i = 0; i < 11; i++)
-    o << static_cast<char>(s.hallway[i] ? s.hallway[i] - 1 + 'A' : '.');
-  o << "#\n";
-  bool first = true;
-  for (int k = 3; k >= 0; k--) {
-    if (first) o << indent << "##"; else o << indent << "  ";
-    for (int i = 0; i < 4; i++) {
-      o << '#' << static_cast<char>(s.burrows[i][k] ? s.burrows[i][k] - 1 + 'A' : '.');
-    }
-    if (first)o << "###\n"; else o << "#\n";
-    first = false;
-  }
-  o << indent << "  #########\n";
-  o << indent << "energy: " << s.energy << endl;
-  return o.str();
-}
-
-string to_str(const node_t& node) {
-  return to_str(decode_state(node));
 }
 
 void check_burrow_and_move(const state_t& s, int burrow_index, int amphipod,
@@ -219,59 +198,6 @@ adj_t gen_adjacency_list(const state_t& start) {
   return adj;
 }
 
-void xdebug(adj_t& adj) {
-  vector<node_t> nodes{
-      {146873040848161,0},
-      {6135552492833,4294967296},
-      {1737505981729,4294967297},
-      {1720326112545,4563402753},
-      {1718178628897,4567597057},
-      {1718044411169,4567597065},
-      {1718038119713,4567695369},
-      {1718440772897,4567597065},
-      {1718439986465,4567695369},
-      {1721661211937,4567597065},
-      {1721661146401,4567662601},
-      {1721661130017,4567664649},
-      {1721661138209,4567599113},
-      {1721661203745,4563404809},
-      {1721661728033,4294969353},
-      {72394286369,4301260809},
-      {98164090145,4294969353},
-      {29444613409,4429187081},
-      {304322520353,4429185033},
-      {304322519329,4429186057},
-      {304326713633,4429185033},
-      {304326713377,4429187081},
-      {2503349968929,4429185033},
-      {2503349968897,4429187081},
-      {2503349968905,4429187073},
-      {2503349968969,4429187072},
-      {20095536013385,4429185024},
-      {20095536013897,4294967296},
-      {160833024369225,0}
-  };
-  for (int i = 0; i < nodes.size() - 1; i++) {
-    auto& node = nodes[i];
-    auto& next_node = nodes[i + 1];
-    auto& edges = adj[node];
-    auto it = find_if(begin(edges), end(edges), [next_node](const pair<node_t, int>& edge) {
-      auto [burrows, hallway] = edge.first;
-      return burrows == next_node.first && hallway == next_node.second;
-    });
-    if (it != end(edges)) {
-      cout << "found next edge {" << next_node.first << ',' << next_node.second << "} in {" <<
-          node.first << ',' << node.second << "} with e: " << it->second << "\n";
-      cout << to_str(decode_state(next_node));
-    } else {
-      cout << "edge {" << next_node.first << ',' << next_node.second << "} not found in {" <<
-           node.first << ',' << node.second << "}\n";
-      cout << to_str(decode_state(next_node), "xxx   ");
-      return;
-    }
-  }
-}
-
 int main() {
 #define S start.burrows
   state_t start;
@@ -279,10 +205,10 @@ int main() {
   S[0][2] = D; S[1][2] = C; S[2][2] = B; S[3][2] = A;
   S[0][1] = D; S[1][1] = B; S[2][1] = A; S[3][1] = C;
   S[0][0] = C; S[1][0] = A; S[2][0] = D; S[3][0] = B;
-  //S[0][3] = B; S[1][3] = C; S[2][3] = B; S[3][3] = D;
-  //S[0][2] = D; S[1][2] = C; S[2][2] = B; S[3][2] = A;
-  //S[0][1] = D; S[1][1] = B; S[2][1] = A; S[3][1] = C;
-  //S[0][0] = A; S[1][0] = D; S[2][0] = C; S[3][0] = A;
+  // S[0][3] = B; S[1][3] = C; S[2][3] = B; S[3][3] = D;
+  // S[0][2] = D; S[1][2] = C; S[2][2] = B; S[3][2] = A;
+  // S[0][1] = D; S[1][1] = B; S[2][1] = A; S[3][1] = C;
+  // S[0][0] = A; S[1][0] = D; S[2][0] = C; S[3][0] = A;
   node_t start_node = to_node(start);
 #undef S
 
@@ -301,18 +227,6 @@ int main() {
   auto t2 = std::chrono::high_resolution_clock::now();
   cout << "took: " << std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count() << " s" << endl;
   cout << "# nodes: " << adj.size() << endl;
-//xdebug(adj);
-  //ofstream adj_txt("adj.txt");
-  //for (auto [node, edges] : adj) {
-  //  auto [burrows, hallways] = node;
-  //  adj_txt << burrows << ' ' << hallways << ' ';
-  //  adj_txt << edges.size() << ' ';
-  //  for (auto [child_node, energy] : edges) {
-  //    auto [c_b, c_h] = child_node;
-  //    adj_txt << c_b << ' ' << c_h << ' ' << energy << ' ';
-  //  }
-  //}
-  //adj_txt.close();
 
   cout << "initializing energy map" << endl;
   t1 = std::chrono::high_resolution_clock::now();
@@ -344,18 +258,7 @@ int main() {
   }
   t2 = std::chrono::high_resolution_clock::now();
   cout << "took: " << std::chrono::duration_cast<std::chrono::seconds>(t2 - t1).count() << " s" << endl;
-
   cout << "min energy found: " << energies[finish_node] << '\n';
-  vector<node_t> path;
-  auto& p = finish_node;
-  while (p != start_node) {
-    path.push_back(p);
-    p = parents[p];
-  }
-  path.push_back(start_node);
-  reverse(begin(path), end(path));
-  cout << "solution found: " << endl;
-  for (auto pi : path)
-    cout << to_str(pi) << endl;
+
   return 0;
 }

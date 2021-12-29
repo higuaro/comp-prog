@@ -127,8 +127,8 @@ vector<encoded_t> possible_moves_from(const state_t& s) {
       // found someone here, can't advance further
       if (s.hallway[j]) break;
       // found a burrow along the way
-      if (int b = burrow_entrance[j]; b--)
-        check_burrow_and_move(s, b, amphipod, i, j, moves);
+      if (int b = burrow_entrance[j]; b == amphipod)
+        check_burrow_and_move(s, --b, amphipod, i, j, moves);
     }
 
     // look left
@@ -136,8 +136,8 @@ vector<encoded_t> possible_moves_from(const state_t& s) {
       // found someone here, can't advance further
       if (s.hallway[j]) break;
       // found a burrow along the way
-      if (int b = burrow_entrance[j]; b--)
-        check_burrow_and_move(s, b, amphipod, i, j, moves);
+      if (int b = burrow_entrance[j]; b == amphipod)
+        check_burrow_and_move(s, --b, amphipod, i, j, moves);
     }
   }
 
