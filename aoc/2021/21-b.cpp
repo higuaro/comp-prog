@@ -18,26 +18,22 @@ pair<int64_t, int64_t> solve(
 
   int64_t u1 = 0, u2 = 0;
 
-  int p = pos1;
-  int s = score1;
   if (turn) {
     for (int d1 = 1; d1 <= 3; d1++)
       for (int d2 = 1; d2 <= 3; d2++)
         for (int d3 = 1; d3 <= 3; d3++) {
-          p = (p + d1 + d2 + d3) % 10;
-          s += pos[p];
+          int p = ((turn ? pos1 : pos2) + d1 + d2 + d3) % 10;
+          int s = (turn ? score1 : score2) + pos[p];
           auto [uu1, uu2] = solve(!turn, p, pos2, s, score2);
           u1 += uu1;
           u2 += uu2;
         }
   } else {
-    p = pos2;
-    s = score2;
     for (int d1 = 1; d1 <= 3; d1++)
       for (int d2 = 1; d2 <= 3; d2++)
         for (int d3 = 1; d3 <= 3; d3++) {
-          p = (p + d1 + d2 + d3) % 10;
-          s += pos[p];
+          int p = (pos2 + d1 + d2 + d3) % 10;
+          int s = score2 + pos[p];
           auto [uu1, uu2] = solve(!turn, pos1, p, score1, s);
           u1 += uu1;
           u2 += uu2;
@@ -48,8 +44,8 @@ pair<int64_t, int64_t> solve(
 }
 
 int main() {
-  int p1 = 4 - 1;
-  int p2 = 8 - 1;
+  int p1 = 9 - 1;
+  int p2 = 10 - 1;
 
   for (int t = 0; t < 2; t++) 
     for (int i = 0; i < 10; i++)
@@ -62,5 +58,6 @@ int main() {
 
   auto [u1, u2] = solve(true, p1, p2, 0, 0);
   cout << u1 << ',' << u2 << endl;
+  cout << max(u1, u2) << endl;
   return 0;
 }
