@@ -2,28 +2,22 @@
 using namespace std;
 int main() {
   int n, x; cin >> n >> x;
-  vector<int> p(n, 0);
-  for (auto& pi : p) cin >> pi;
-  sort(begin(p), end(p));
-  int total = 0;
-  int cur = 0;
-  int count = 0;
-  for (auto pi : p) {
-    if (pi > x) break;
-    if (count == 0) {
-      count = 1;
-      cur = pi;
-    } else if (count == 1) {
-      total++;
-      if (cur + pi <= x) {
-        cur = count = 0;
-      } else {
-        cur = pi;
-        count = 1;
-      }
-    }
+  multiset<int, greater<int>> p;
+  for (int i = 0; i < n; i++) {
+    int pi; cin >> pi;
+    p.insert(pi);
   }
-  if (cur || count) total++;
+  int total = 0;
+  while (!p.empty()) {
+    auto p1 = p.begin();
+    int w = *p1;
+    p.erase(p1);
+    if (w > x) continue;
+    auto p2 = p.lower_bound(x - w); 
+    if (p2 != p.end())
+      p.erase(p2);
+    total++;
+  }
   cout << total << endl;
   return 0;
 }
