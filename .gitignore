@@ -1,15 +1,11 @@
 # AtCoder
-atcoder/rounds/*
-!atcoder/rounds/**/*.cpp
-atcoder/upsolved/*
-!atcoder/upsolved/*.cpp
-atcoder/upsolved/wip/
-atcoder/virtual-participation/*
-!atcoder/virtual-participation/*.cpp
+*
+!/**/
+!*.*
+!*.cpp
 
-# CodeForces
-cf/rounds/*
-!cf/rounds/**/*.cpp
+# WIP
+atcoder/upsolved/wip/
 cf/wip/
 
 */bin/*
@@ -33,9 +29,6 @@ adventofcode/*
 
 books/
 
-hackercup/
-!hackercup/**/*.cpp
-
 # LeetCode
 # Ignore everything in this folder unless explicitly added, usually this folder
 # is for local copies of the code for debugging
@@ -44,4 +37,3 @@ leetcode/
 # HackeRank
 # Again, ignore unless explicitly told, solutions are already stored in their servers
 hackerank/
-
