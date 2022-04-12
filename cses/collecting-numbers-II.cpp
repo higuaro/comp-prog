@@ -1,14 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
+int runs(const vector<int>& x) {
+  unordered_map<int, int> pos;
+  for (int i = 0; i < x.size(); i++) pos[x[i]] = i;
+  int r = 0;
+  for (auto xi : x) 
+    if (pos.count(xi - 1))
+      r += pos[xi - 1] > pos[xi] ? 1 : 0;
+  return r;
+}
 
-int change(unordered_map<int, int>& pos, int x) {
-  int pos_x = pos[x];
-  if (x == 1) {
-    const int pos_2 = pos[2];
-    return pos_x < pos_2 ? 0 : 1;
-  } 
-  int pos_pred_x = pos[x - 1];
-  return pos_pred_x < pos_x ? 0 : 1;
+int change(unordered_map<int, int>& pos, vector<int>& x, int a, int b) {
+  int xa = x[a], xb = x[b];
+  set<int> nums{xa - 1, xa, xa + 1, xb - 1, xb, xb + 1};
+  nums.erase(0);
+  nums.erase(x.size() + 1);
+
+  vector<int> xs(begin(nums), end(nums));
+  auto cmp = [&pos](const int n1, const int n2) { return pos[n1] < pos[n2]; };
+  sort(begin(xs), end(xs), cmp);
+cout << "before xs: "; for (auto xi : xs) cout << xi << ','; cout << '\n';
+  int r1 = runs(xs);
+
+  swap(x[a], x[b]);
+  pos[xa] = b; pos[xb] = a;
+
+  sort(begin(xs), end(xs), cmp);
+cout << " after xs: "; for (auto xi : xs) cout << xi << ','; cout << '\n';
+  int r2 = runs(xs);
+cout << "delta: " << r2 - r1 << '\n';
+  return r2 - r1;
 }
 
 int main() {
@@ -26,29 +47,7 @@ int main() {
   for (int i = 0; i < m; i++) {
     int a, b; cin >> a >> b;
     a--; b--;
-    int xa = x[a], xb = x[b];
-
-    int change_xa = change(pos, xa);
-    int change_xb = change(pos, xb);
-
-    swap(x[a], x[b]);
-    pos[xa] = b; pos[xb] = a;
-
-    int change_xa_after = change(pos, xa);
-    int change_xb_after = change(pos, xb);
-
-    if (change_xa < change_xa_after) 
-      runs++;
-    else if (change_xa > change_xa_after)
-      runs--;
-
-    if (abs(xa - xb) != 1) {
-      if (change_xb < change_xb_after) 
-        runs++;
-      else if (change_xb > change_xb_after)
-        runs--;
-    }
-    
+    runs += change(pos, x, a, b);
     cout << runs << '\n';
   }
   return 0;
