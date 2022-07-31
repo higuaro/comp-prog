@@ -12,6 +12,7 @@ cf/wip/
 */build/*
 */tmp/*
 
+.DS_Store
 **/*.in
 *.out
 *.swp
