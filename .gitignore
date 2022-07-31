@@ -12,6 +12,7 @@ cf/wip/
 */build/*
 */tmp/*
 
+.idea/
 .DS_Store
 **/*.in
 *.out
